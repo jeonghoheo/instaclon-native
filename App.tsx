@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useCallback } from "react";
 import { useState } from "react";
 import * as Font from "expo-font";
+import { Asset } from "expo-asset";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function App() {
@@ -13,7 +14,15 @@ export default function App() {
   const preload = useCallback(async () => {
     const fontsToLoad = [Ionicons.font];
     const fontPromises = fontsToLoad.map((font) => Font.loadAsync(font));
-    Promise.all(fontPromises);
+    const imagesToLoad = [
+      require("./assets/logo.png"),
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png"
+    ];
+    const imagePromises = imagesToLoad.map((image) => Asset.loadAsync(image));
+    Promise.all<Promise<void> | Promise<Asset[]>>([
+      ...imagePromises,
+      ...fontPromises
+    ]);
   }, []);
 
   if (loading) {
