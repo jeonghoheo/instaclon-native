@@ -1,17 +1,23 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CreateAccount from "../screens/create-account";
-import Login from "./login";
+import LogIn from "./log-in";
 import Welcome from "./welcome";
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  LogIn: undefined;
+  CreateAccount: undefined;
+  Welcome: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 function LoggedOutNav() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="CreateAccount" component={CreateAccount} />
       <Stack.Screen name="Welcome" component={Welcome} />
+      <Stack.Screen name="LogIn" component={LogIn} />
+      <Stack.Screen name="CreateAccount" component={CreateAccount} />
     </Stack.Navigator>
   );
 }
